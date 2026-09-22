@@ -1,0 +1,22 @@
+name: Quilt Tests
+
+on:
+  push:
+    branches: ["main", "quilt-backend"]
+  pull_request:
+    branches: ["main", "quilt-backend"]
+
+jobs:
+  quilt-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      # Zero npm ci: the suite only needs the TypeScript compiler (the
+      # repo's own version, fetched via npx) and node's built-in runner.
+      - name: Compile quilt kernel/bridge + tests
+        run: npx -y -p typescript@4.9.5 tsc -p tsconfig.test.json
+      - name: Run node --test suite
+        run: node --test .quilt-test/tests/
