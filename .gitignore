@@ -29,3 +29,6 @@ IDEAS.md
 # Local Netlify folder
 .netlify
 biography.md
+
+# quilt test build output
+.quilt-test
